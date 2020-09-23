@@ -45,7 +45,7 @@ import {
 import { compose, withPreferredColorScheme } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { useEffect, useState, useRef } from '@wordpress/element';
-import { cover as icon, replace, image, warning } from '@wordpress/icons';
+import { chevronRight, cover as icon, replace, image, warning } from '@wordpress/icons';
 import { getProtocol } from '@wordpress/url';
 
 /**
@@ -322,6 +322,13 @@ const Cover = ( {
 								/>
 							</View>
 						</View>
+					</BottomSheet.Cell>
+					<BottomSheet.Cell
+						leftAlign
+						label={ __( 'Edit focal point' ) }
+						value="" /* TODO(David): Why is a value required display chevron icon? */
+					>
+						<Icon icon={ chevronRight } />
 					</BottomSheet.Cell>
 					<BottomSheet.Cell
 						leftAlign
