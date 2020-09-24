@@ -2,7 +2,11 @@
  * WordPress dependencies
  */
 import { InspectorControls } from '@wordpress/block-editor';
-import { BottomSheet, ColorSettings } from '@wordpress/components';
+import {
+	BottomSheet,
+	ColorSettings,
+	FocalPointSettings,
+} from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withDispatch, withSelect } from '@wordpress/data';
 /**
@@ -44,7 +48,7 @@ function BottomSheetSettings( {
 				<BottomSheet.NavigationScreen
 					name={ blockSettingsScreens.focalPoint }
 				>
-					<ColorSettings defaultSettings={ settings } />
+					<FocalPointSettings defaultSettings={ settings } />
 				</BottomSheet.NavigationScreen>
 			</BottomSheet.NavigationContainer>
 		</BottomSheet>
