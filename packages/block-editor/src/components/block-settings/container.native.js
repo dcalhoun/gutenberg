@@ -13,6 +13,7 @@ import styles from './container.native.scss';
 export const blockSettingsScreens = {
 	settings: 'Settings',
 	color: 'Color',
+	focalPoint: 'FocalPoint',
 };
 
 function BottomSheetSettings( {
@@ -37,6 +38,11 @@ function BottomSheetSettings( {
 				</BottomSheet.NavigationScreen>
 				<BottomSheet.NavigationScreen
 					name={ blockSettingsScreens.color }
+				>
+					<ColorSettings defaultSettings={ settings } />
+				</BottomSheet.NavigationScreen>
+				<BottomSheet.NavigationScreen
+					name={ blockSettingsScreens.focalPoint }
 				>
 					<ColorSettings defaultSettings={ settings } />
 				</BottomSheet.NavigationScreen>
