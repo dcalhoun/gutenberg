@@ -48,7 +48,7 @@ function BottomSheetSettings( {
 				<BottomSheet.NavigationScreen
 					name={ blockSettingsScreens.focalPoint }
 				>
-					<FocalPointSettings defaultSettings={ settings } />
+					<FocalPointSettings />
 				</BottomSheet.NavigationScreen>
 			</BottomSheet.NavigationContainer>
 		</BottomSheet>
