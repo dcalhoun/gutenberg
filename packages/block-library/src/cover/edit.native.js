@@ -22,6 +22,7 @@ import {
 	PanelBody,
 	RangeControl,
 	BottomSheet,
+	ToggleControl,
 	ToolbarButton,
 	ToolbarGroup,
 	Gradient,
@@ -91,6 +92,7 @@ const Cover = ( {
 		backgroundType,
 		dimRatio,
 		focalPoint,
+		hasParallax,
 		minHeight,
 		url,
 		id,
@@ -192,6 +194,7 @@ const Cover = ( {
 	const onClearMedia = () => {
 		setAttributes( {
 			focalPoint: undefined,
+			hasParallax: undefined,
 			id: undefined,
 			url: undefined,
 		} );
@@ -211,6 +214,13 @@ const Cover = ( {
 	function setFocalPoint( value ) {
 		setAttributes( { focalPoint: value } );
 	}
+
+	const toggleParallax = () => {
+		setAttributes( {
+			hasParallax: ! hasParallax,
+			...( ! hasParallax ? { focalPoint: undefined } : {} ),
+		} );
+	};
 
 	function openColorPicker() {
 		if ( isParentSelected ) {
@@ -341,6 +351,11 @@ const Cover = ( {
 						focalPoint={ focalPoint || IMAGE_DEFAULT_FOCAL_POINT }
 						onFocalPointChange={ setFocalPoint }
 						url={ url }
+					/>
+					<ToggleControl
+						label={ __( 'Fixed background' ) }
+						checked={ hasParallax }
+						onChange={ toggleParallax }
 					/>
 					<BottomSheet.Cell
 						leftAlign
