@@ -190,7 +190,11 @@ const Cover = ( {
 	};
 
 	const onClearMedia = () => {
-		setAttributes( { id: undefined, url: undefined } );
+		setAttributes( {
+			focalPoint: undefined,
+			id: undefined,
+			url: undefined,
+		} );
 		closeSettingsBottomSheet();
 	};
 
