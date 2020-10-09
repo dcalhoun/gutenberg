@@ -44,6 +44,7 @@ const ImageComponent = ( {
 	retryMessage,
 	url,
 	shapeStyle,
+	style,
 	width: imageWidth,
 } ) => {
 	const [ imageData, setImageData ] = useState( null );
@@ -160,6 +161,7 @@ const ImageComponent = ( {
 				// to disappear when an aligned image can't be downloaded
 				// https://github.com/wordpress-mobile/gutenberg-mobile/issues/1592
 				imageData && align && { alignItems: align },
+				style,
 			] }
 			onLayout={ onContainerLayout }
 		>
