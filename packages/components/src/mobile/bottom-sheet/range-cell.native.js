@@ -5,6 +5,7 @@ import {
 	Platform,
 	AccessibilityInfo,
 	findNodeHandle,
+	Text,
 	TextInput,
 	View,
 	PixelRatio,
@@ -172,6 +173,7 @@ class BottomSheetRangeCell extends Component {
 			rangePreview,
 			cellContainerStyle,
 			shouldDisplayTextInput = true,
+			inputSuffix,
 			...cellProps
 		} = this.props;
 
@@ -202,6 +204,11 @@ class BottomSheetRangeCell extends Component {
 			styles.container,
 			isIOS ? styles.containerIOS : styles.containerAndroid,
 		];
+
+		const suffixColor = getStylesFromColorScheme(
+			styles.suffixColor,
+			styles.suffixColorDark
+		);
 
 		return (
 			<Cell
@@ -261,6 +268,11 @@ class BottomSheetRangeCell extends Component {
 							defaultValue={ `${ inputValue }` }
 							value={ inputValue }
 						/>
+					) }
+					{ shouldDisplayTextInput && inputSuffix && (
+						<Text style={ [ styles.suffix, suffixColor ] }>
+							{ inputSuffix }
+						</Text>
 					) }
 				</View>
 			</Cell>
