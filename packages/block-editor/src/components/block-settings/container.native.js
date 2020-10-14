@@ -28,7 +28,6 @@ function BottomSheetSettings( {
 } ) {
 	return (
 		<BottomSheet
-			isChildrenScrollable
 			isVisible={ editorSidebarOpened }
 			onClose={ closeGeneralSidebar }
 			hideHeader
