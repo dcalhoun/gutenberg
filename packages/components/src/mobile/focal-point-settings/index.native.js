@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 /**
@@ -20,7 +20,6 @@ import NavigationHeader from '../bottom-sheet/navigation-header';
 const FocalPointSettingsMemo = React.memo(
 	( {
 		focalPoint,
-		listProps,
 		onFocalPointChange,
 		onHandleClosingBottomSheet,
 		shouldEnableBottomSheetMaxHeight,
@@ -45,22 +44,20 @@ const FocalPointSettingsMemo = React.memo(
 
 		return (
 			<SafeAreaView style={ { height: '100%' } }>
-				<ScrollView { ...listProps }>
-					<NavigationHeader
-						screen={ __( 'Edit focal point' ) }
-						leftButtonOnPress={ () => onButtonPress( 'cancel' ) }
-						applyButtonOnPress={ () => onButtonPress( 'apply' ) }
-						isFullscreen
-					/>
-					<FocalPointPicker
-						focalPoint={ draftFocalPoint }
-						onChange={ setDraftFocalPoint }
-						shouldEnableBottomSheetScroll={
-							shouldEnableBottomSheetScroll
-						}
-						url={ url }
-					/>
-				</ScrollView>
+				<NavigationHeader
+					screen={ __( 'Edit focal point' ) }
+					leftButtonOnPress={ () => onButtonPress( 'cancel' ) }
+					applyButtonOnPress={ () => onButtonPress( 'apply' ) }
+					isFullscreen
+				/>
+				<FocalPointPicker
+					focalPoint={ draftFocalPoint }
+					onChange={ setDraftFocalPoint }
+					shouldEnableBottomSheetScroll={
+						shouldEnableBottomSheetScroll
+					}
+					url={ url }
+				/>
 			</SafeAreaView>
 		);
 	}
@@ -69,15 +66,13 @@ const FocalPointSettingsMemo = React.memo(
 function FocalPointSettings( props ) {
 	const route = useRoute();
 	const {
-		listProps,
 		onHandleClosingBottomSheet,
-		shouldEnableBottomSheetMaxHeight,
 		shouldEnableBottomSheetScroll,
+		shouldEnableBottomSheetMaxHeight,
 	} = useContext( BottomSheetContext );
 
 	return (
 		<FocalPointSettingsMemo
-			listProps={ listProps }
 			onHandleClosingBottomSheet={ onHandleClosingBottomSheet }
 			shouldEnableBottomSheetScroll={ shouldEnableBottomSheetScroll }
 			shouldEnableBottomSheetMaxHeight={
