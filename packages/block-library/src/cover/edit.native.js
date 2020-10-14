@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View, ScrollView, Text, TouchableWithoutFeedback } from 'react-native';
 import Video from 'react-native-video';
 
 /**
@@ -293,86 +293,102 @@ const Cover = ( {
 
 	const controls = (
 		<InspectorControls>
-			<OverlayColorSettings
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-			/>
-			{ url ? (
-				<PanelBody>
-					<RangeControl
-						label={ __( 'Opacity' ) }
-						minimumValue={ 0 }
-						maximumValue={ 100 }
-						value={ dimRatio }
-						onChange={ onOpactiyChange }
-						style={ styles.rangeCellContainer }
-						separatorType={ 'topFullWidth' }
-					/>
-				</PanelBody>
-			) : null }
-			<PanelBody title={ __( 'Dimensions' ) }>
-				<RangeControl
-					label={ __( 'Minimum height in pixels' ) }
-					minimumValue={ COVER_MIN_HEIGHT }
-					maximumValue={ COVER_MAX_HEIGHT }
-					value={ CONTAINER_HEIGHT }
-					onChange={ onHeightChange }
-					style={ styles.rangeCellContainer }
-				/>
-			</PanelBody>
+			<BottomSheetConsumer>
+				{ ( { listProps } ) => (
+					<ScrollView { ...listProps }>
+						<OverlayColorSettings
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+						/>
+						{ url ? (
+							<PanelBody>
+								<RangeControl
+									label={ __( 'Opacity' ) }
+									minimumValue={ 0 }
+									maximumValue={ 100 }
+									value={ dimRatio }
+									onChange={ onOpactiyChange }
+									style={ styles.rangeCellContainer }
+									separatorType={ 'topFullWidth' }
+								/>
+							</PanelBody>
+						) : null }
+						<PanelBody title={ __( 'Dimensions' ) }>
+							<RangeControl
+								label={ __( 'Minimum height in pixels' ) }
+								minimumValue={ COVER_MIN_HEIGHT }
+								maximumValue={ COVER_MAX_HEIGHT }
+								value={ CONTAINER_HEIGHT }
+								onChange={ onHeightChange }
+								style={ styles.rangeCellContainer }
+							/>
+						</PanelBody>
 
-			<PanelBody title={ __( 'Media' ) }>
-				{ url ? (
-					<>
-						<BottomSheet.Cell
-							style={ [ styles.mediaPreview, backgroundColor ] }
-						>
-							<Image
-								editButton={ true }
-								isSelected={ true }
-								isUploadFailed={ didUploadFail }
-								isUploadInProgress={ isUploadInProgress }
-								onSelectMediaUploadOption={ onSelectMedia }
-								openMediaOptions={ openMediaOptionsRef.current }
-								resizeMode="contain"
-								url={ url }
-								height="100%"
-								width={ styles.image.width }
-							/>
-							<Icon
-								icon={ plus }
-								size={ styles.focalPointHint.width }
-								style={ styles.focalPointHint }
-							/>
-						</BottomSheet.Cell>
-						<FocalPointSettings
-							focalPoint={
-								focalPoint || IMAGE_DEFAULT_FOCAL_POINT
-							}
-							onFocalPointChange={ setFocalPoint }
-							url={ url }
-						/>
-						<ToggleControl
-							label={ __( 'Fixed background' ) }
-							checked={ hasParallax }
-							onChange={ toggleParallax }
-						/>
-						<BottomSheet.Cell
-							leftAlign
-							label={ __( 'Clear Media' ) }
-							labelStyle={ styles.clearMediaButton }
-							onPress={ onClearMedia }
-						/>
-					</>
-				) : (
-					<BottomSheet.Cell
-						label={ __( 'Add image or video' ) }
-						labelStyle={ addMediaButtonStyle }
-						leftAlign
-						onPress={ openMediaOptionsRef.current }
-					/>
+						<PanelBody title={ __( 'Media' ) }>
+							{ url ? (
+								<>
+									<BottomSheet.Cell
+										style={ [
+											styles.mediaPreview,
+											backgroundColor,
+										] }
+									>
+										<Image
+											editButton={ true }
+											isSelected={ true }
+											isUploadFailed={ didUploadFail }
+											isUploadInProgress={
+												isUploadInProgress
+											}
+											onSelectMediaUploadOption={
+												onSelectMedia
+											}
+											openMediaOptions={
+												openMediaOptionsRef.current
+											}
+											resizeMode="contain"
+											url={ url }
+											height="100%"
+											width={ styles.image.width }
+										/>
+										<Icon
+											icon={ plus }
+											size={ styles.focalPointHint.width }
+											style={ styles.focalPointHint }
+										/>
+									</BottomSheet.Cell>
+									<FocalPointSettings
+										focalPoint={
+											focalPoint ||
+											IMAGE_DEFAULT_FOCAL_POINT
+										}
+										onFocalPointChange={ setFocalPoint }
+										url={ url }
+									/>
+									<ToggleControl
+										label={ __( 'Fixed background' ) }
+										checked={ hasParallax }
+										onChange={ toggleParallax }
+									/>
+									<BottomSheet.Cell
+										leftAlign
+										label={ __( 'Clear Media' ) }
+										labelStyle={ styles.clearMediaButton }
+										onPress={ onClearMedia }
+									/>
+								</>
+							) : (
+								<BottomSheet.Cell
+									label={ __( 'Add image or video' ) }
+									labelStyle={ addMediaButtonStyle }
+									leftAlign
+									onPress={ openMediaOptionsRef.current }
+								/>
+							) }
+						</PanelBody>
+					</ScrollView>
 				) }
-			</PanelBody>
+			</BottomSheetConsumer>
 		</InspectorControls>
 	);
 
