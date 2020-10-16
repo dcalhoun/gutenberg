@@ -60,7 +60,7 @@ const ImageComponent = ( {
 					height: imgHeight,
 				};
 				setImageData( metaData );
-				if ( typeof onImageDataLoad === 'function' ) {
+				if ( onImageDataLoad ) {
 					onImageDataLoad( metaData );
 				}
 			} );
