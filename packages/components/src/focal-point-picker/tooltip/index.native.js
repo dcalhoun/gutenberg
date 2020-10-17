@@ -21,7 +21,7 @@ import { useEffect, useRef, useState, useContext } from '@wordpress/element';
  */
 import styles from './style.scss';
 
-const TooltipContext = React.createContext( { visible: true } );
+const TooltipContext = React.createContext( true );
 
 function TooltipOverlay( { children } ) {
 	const [ visible, setVisible ] = useState( true );
@@ -31,7 +31,7 @@ function TooltipOverlay( { children } ) {
 	};
 
 	return (
-		<TooltipContext.Provider value={ { visible } }>
+		<TooltipContext.Provider value={ visible }>
 			{ children }
 			{ visible && (
 				<TouchableWithoutFeedback onPress={ onHide }>
@@ -44,7 +44,7 @@ function TooltipOverlay( { children } ) {
 
 const Tooltip = ( { onTooltipHidden, xOffset, yOffset } ) => {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
-	const { visible } = useContext( TooltipContext );
+	const visible = useContext( TooltipContext );
 	const [ dimensions, setDimensions ] = useState( null );
 
 	useEffect( () => {
