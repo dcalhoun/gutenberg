@@ -42,7 +42,7 @@ function TooltipOverlay( { children } ) {
 	);
 }
 
-const Tooltip = ( { onTooltipHidden, placementOffset = { x: 0, y: 0 } } ) => {
+const Tooltip = ( { onTooltipHidden, xOffset, yOffset } ) => {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
 	const { visible } = useContext( TooltipContext );
 	const [ dimensions, setDimensions ] = useState( null );
@@ -65,11 +65,12 @@ const Tooltip = ( { onTooltipHidden, placementOffset = { x: 0, y: 0 } } ) => {
 		} );
 	};
 
+	// Transforms rely upon onLayout to enable custom offsets additions
 	let tooltipTransforms;
 	if ( dimensions ) {
 		tooltipTransforms = [
-			{ translateX: -dimensions.width / 2 + ( placementOffset.x || 0 ) },
-			{ translateY: -dimensions.height + ( placementOffset.y || 0 ) },
+			{ translateX: -dimensions.width / 2 + xOffset },
+			{ translateY: -dimensions.height + yOffset },
 		];
 	}
 
@@ -114,6 +115,11 @@ const Tooltip = ( { onTooltipHidden, placementOffset = { x: 0, y: 0 } } ) => {
 			</View>
 		</Animated.View>
 	);
+};
+
+Tooltip.defaultProps = {
+	xOffset: 0,
+	yOffset: 0,
 };
 
 Tooltip.Overlay = TooltipOverlay;

@@ -174,10 +174,7 @@ export default function FocalPointPicker( props ) {
 							pointerEvents="none"
 							style={ focalPointGroupStyles }
 						>
-							<Tooltip
-								// Account for styles.focalPoint offset
-								placementOffset={ { y: -25 } }
-							/>
+							<Tooltip yOffset={ -25 } />
 							<View style={ styles.focalPoint }>
 								<FocalPoint />
 							</View>
