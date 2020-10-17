@@ -80,56 +80,31 @@ const Tooltip = ( { onTooltipHidden, additionalOffset = { x: 0, y: 0 } } ) => {
 	}
 
 	return (
-		<Animated.View
-			style={ {
-				opacity: animationValue,
-				transform: [
-					{
-						translateY: animationValue.interpolate( {
-							inputRange: [ 0, 1 ],
-							outputRange: [ visible ? 0 : -8, 0 ],
-						} ),
-					},
-				],
+		<View
+			onLayout={ ( { nativeEvent } ) => {
+				const { height, width } = nativeEvent.layout;
+				setDimensions( { height, width } );
 			} }
+			style={ [
+				styles.tooltip,
+				{
+					shadowColor: styles.tooltipShadow.color,
+					shadowOffset: {
+						width: 0,
+						height: 2,
+					},
+					shadowOpacity: 0.25,
+					shadowRadius: 2,
+					elevation: 2,
+					transform: tooltipTransforms,
+				},
+			] }
 		>
-			<TouchableWithoutFeedback>
-				{ /* <View style={ styles.tooltipWrap }> */ }
-				<View
-					onLayout={ ( { nativeEvent } ) => {
-						const { height, width } = nativeEvent.layout;
-						setDimensions( { height, width } );
-					} }
-					style={ [
-						styles.tooltip,
-						{
-							shadowColor: styles.tooltipShadow.color,
-							shadowOffset: {
-								width: 0,
-								height: 2,
-							},
-							shadowOpacity: 0.25,
-							shadowRadius: 2,
-							elevation: 2,
-							transform: tooltipTransforms,
-						},
-					] }
-				>
-					<Text style={ styles.text }>
-						{ __( 'Drag to adjust focal point' ) }
-					</Text>
-					<View
-						style={ [
-							styles.arrow,
-							{
-								// transform: [ { translateX: -6 } ],
-							},
-						] }
-					/>
-				</View>
-				{ /* </View> */ }
-			</TouchableWithoutFeedback>
-		</Animated.View>
+			<Text style={ styles.text } numberOfLines={ 1 }>
+				{ __( 'Drag to adjust focal point' ) }
+			</Text>
+			<View style={ styles.arrow } />
+		</View>
 	);
 };
 

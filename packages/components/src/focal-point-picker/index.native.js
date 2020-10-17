@@ -177,10 +177,11 @@ export default function FocalPointPicker( props ) {
 							style={ focalPointGroupStyles }
 						>
 							<Tooltip
-								additionalOffset={ { y: -31 } }
+								// Account for negative styles.focalPoint offset
+								additionalOffset={ { y: -30 } }
 								visible={ tooltipVisible }
 							/>
-							<View style={ styles.focalPointConstraint }>
+							<View style={ styles.focalPoint }>
 								<FocalPoint />
 							</View>
 						</Animated.View>
