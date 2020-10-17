@@ -1,10 +1,4 @@
 export default `
-<!-- wp:cover {"url":"https://cldup.com/cXyG__fTLN.jpg","id":890,"dimRatio":20,"overlayColor":"luminous-vivid-orange","focalPoint":{"x":"0.63","y":"0.83"},"minHeight":219} -->
-<div class="wp-block-cover has-background-dim-20 has-luminous-vivid-orange-background-color has-background-dim" style="background-image:url(https://cldup.com/cXyG__fTLN.jpg);background-position:63% 83%;min-height:219px"><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"align":"center","placeholder":"Write title…","className":"has-text-color has-very-light-gray-color","fontSize":"large"} -->
-<p class="has-text-align-center has-text-color has-very-light-gray-color has-large-font-size">Cool cover</p>
-<!-- /wp:paragraph --></div></div>
-<!-- /wp:cover -->
-
 <!-- wp:heading -->
 <h2>Text Blocks</h2>
 <!-- /wp:heading -->
