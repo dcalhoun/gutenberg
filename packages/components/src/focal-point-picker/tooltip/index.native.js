@@ -42,7 +42,7 @@ function TooltipOverlay( { children } ) {
 	);
 }
 
-const Tooltip = ( { onTooltipHidden, additionalOffset = { x: 0, y: 0 } } ) => {
+const Tooltip = ( { onTooltipHidden, placementOffset = { x: 0, y: 0 } } ) => {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
 	const { visible } = useContext( TooltipContext );
 	const [ dimensions, setDimensions ] = useState( null );
@@ -68,8 +68,8 @@ const Tooltip = ( { onTooltipHidden, additionalOffset = { x: 0, y: 0 } } ) => {
 	let tooltipTransforms;
 	if ( dimensions ) {
 		tooltipTransforms = [
-			{ translateX: -dimensions.width / 2 + ( additionalOffset.x || 0 ) },
-			{ translateY: -dimensions.height + ( additionalOffset.y || 0 ) },
+			{ translateX: -dimensions.width / 2 + ( placementOffset.x || 0 ) },
+			{ translateY: -dimensions.height + ( placementOffset.y || 0 ) },
 		];
 	}
 
@@ -81,7 +81,7 @@ const Tooltip = ( { onTooltipHidden, additionalOffset = { x: 0, y: 0 } } ) => {
 					{
 						translateY: animationValue.interpolate( {
 							inputRange: [ 0, 1 ],
-							outputRange: [ visible ? 0 : -8, 0 ],
+							outputRange: [ visible ? 0 : -4, 0 ],
 						} ),
 					},
 				],

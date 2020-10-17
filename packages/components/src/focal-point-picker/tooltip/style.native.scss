@@ -15,7 +15,7 @@ $tooltipArrowOffset: -5px;
 	border-radius: 4px;
 	position: absolute;
 	left: 50%;
-	top: $tooltipArrowOffset;
+	top: $tooltipArrowOffset * 2;
 }
 
 .tooltipShadow {
