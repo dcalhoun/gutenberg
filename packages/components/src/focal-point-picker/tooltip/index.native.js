@@ -13,7 +13,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { useEffect, useRef, useState, useContext } from '@wordpress/element';
 
 /**
@@ -23,7 +22,7 @@ import styles from './style.scss';
 
 const TooltipContext = React.createContext( true );
 
-function TooltipOverlay( { children } ) {
+function Tooltip( { children } ) {
 	const [ visible, setVisible ] = useState( true );
 
 	const onHide = () => {
@@ -42,7 +41,7 @@ function TooltipOverlay( { children } ) {
 	);
 }
 
-const Tooltip = ( { onTooltipHidden, xOffset, yOffset } ) => {
+function Label( { onTooltipHidden, text, xOffset, yOffset } ) {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
 	const visible = useContext( TooltipContext );
 	const [ dimensions, setDimensions ] = useState( null );
@@ -108,20 +107,18 @@ const Tooltip = ( { onTooltipHidden, xOffset, yOffset } ) => {
 					},
 				] }
 			>
-				<Text style={ styles.text }>
-					{ __( 'Drag to adjust focal point' ) }
-				</Text>
+				<Text style={ styles.text }>{ text }</Text>
 				<View style={ styles.arrow } />
 			</View>
 		</Animated.View>
 	);
-};
+}
 
-Tooltip.defaultProps = {
+Label.defaultProps = {
 	xOffset: 0,
 	yOffset: 0,
 };
 
-Tooltip.Overlay = TooltipOverlay;
+Tooltip.Label = Label;
 
 export default Tooltip;

@@ -118,7 +118,7 @@ export default function FocalPointPicker( props ) {
 
 	return (
 		<View style={ styles.container }>
-			<Tooltip.Overlay>
+			<Tooltip>
 				<View style={ styles.media }>
 					<View
 						{ ...panResponder.panHandlers }
@@ -174,7 +174,10 @@ export default function FocalPointPicker( props ) {
 							pointerEvents="none"
 							style={ focalPointGroupStyles }
 						>
-							<Tooltip yOffset={ -25 } />
+							<Tooltip.Label
+								text={ __( 'Drag to adjust focal point' ) }
+								yOffset={ -25 } // Account for styles.focalPoint offset
+							/>
 							<View style={ styles.focalPoint }>
 								<FocalPoint />
 							</View>
@@ -199,7 +202,7 @@ export default function FocalPointPicker( props ) {
 					onChange={ ( y ) => setPosition( { y: y / 100 } ) }
 					value={ Math.round( focalPoint.y * 100 ) }
 				/>
-			</Tooltip.Overlay>
+			</Tooltip>
 		</View>
 	);
 }
