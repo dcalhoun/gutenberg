@@ -178,9 +178,11 @@ export default function FocalPointPicker( props ) {
 								text={ __( 'Drag to adjust focal point' ) }
 								yOffset={ -25 } // Account for styles.focalPoint offset
 							/>
-							<View style={ styles.focalPoint }>
-								<FocalPoint />
-							</View>
+							<FocalPoint
+								height={ styles.focalPoint.height }
+								style={ styles.focalPoint }
+								width={ styles.focalPoint.width }
+							/>
 						</Animated.View>
 					</View>
 				</View>
