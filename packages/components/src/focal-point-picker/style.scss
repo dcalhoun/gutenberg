@@ -18,15 +18,19 @@
 }
 
 .focalPointGroup {
+	border: 1px solid yellow;
 	left: 0;
 	position: absolute;
 	top: 0;
 }
 
 .focalPointConstraint {
+	// background-color: green;
 	height: 50px;
 	margin: -25px 0 0 -25px;
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 50px;
 }
 
