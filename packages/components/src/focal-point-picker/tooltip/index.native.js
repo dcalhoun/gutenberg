@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, useContext } from '@wordpress/element';
  */
 import styles from './style.scss';
 
-const TooltipContext = React.createContext( true );
+const TooltipContext = React.createContext();
 
 function Tooltip( { children } ) {
 	const [ visible, setVisible ] = useState( true );
@@ -43,8 +43,14 @@ function Tooltip( { children } ) {
 
 function Label( { onTooltipHidden, text, xOffset, yOffset } ) {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
-	const visible = useContext( TooltipContext );
 	const [ dimensions, setDimensions ] = useState( null );
+	const visible = useContext( TooltipContext );
+
+	if ( ! visible ) {
+		throw new Error(
+			'Tooltip.Label cannot be rendered outside of the Tooltip component'
+		);
+	}
 
 	useEffect( () => {
 		startAnimation();
