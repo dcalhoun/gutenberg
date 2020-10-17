@@ -8,11 +8,11 @@ import { Path, SVG } from '@wordpress/primitives';
  */
 import styles from './style.scss';
 
-export default function FocalPoint( { height, width } ) {
+export default function FocalPoint( { height, style, width } ) {
 	return (
 		<SVG
 			height={ height }
-			style={ styles.focalPoint }
+			style={ style }
 			viewBox="0 0 30 30"
 			width={ width }
 			xmlns="http://www.w3.org/2000/svg"
