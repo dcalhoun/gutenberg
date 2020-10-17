@@ -33,7 +33,6 @@ export default function FocalPointPicker( props ) {
 
 	const [ containerSize, setContainerSize ] = useState( null );
 	const [ sliderKey, setSliderKey ] = useState( 0 );
-	const [ tooltipVisible, setTooltipVisible ] = useState( true );
 	const [ displayPlaceholder, setDisplayPlaceholder ] = useState( true );
 	const [ videoNaturalSize, setVideoNaturalSize ] = useState( null );
 
@@ -68,7 +67,6 @@ export default function FocalPointPicker( props ) {
 				] ),
 				onPanResponderRelease: ( event ) => {
 					shouldEnableBottomSheetScroll( true );
-					setTooltipVisible( false );
 					pan.flattenOffset();
 					const { locationX: x, locationY: y } = event.nativeEvent;
 					setPosition( {

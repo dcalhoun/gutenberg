@@ -8,7 +8,6 @@ import {
 	Text,
 	TouchableWithoutFeedback,
 	View,
-	Dimensions,
 } from 'react-native';
 
 /**
@@ -31,17 +30,12 @@ function TooltipOverlay( { children } ) {
 		setVisible( false );
 	};
 
-	const stylesOverlay = [
-		styles.overlay,
-		{ height: Dimensions.get( 'window' ).height },
-	];
-
 	return (
 		<TooltipContext.Provider value={ { visible } }>
 			{ children }
 			{ visible && (
 				<TouchableWithoutFeedback onPress={ onHide }>
-					<View style={ stylesOverlay } />
+					<View style={ styles.overlay } />
 				</TouchableWithoutFeedback>
 			) }
 		</TooltipContext.Provider>
@@ -113,7 +107,7 @@ const Tooltip = ( { onTooltipHidden, additionalOffset = { x: 0, y: 0 } } ) => {
 					},
 				] }
 			>
-				<Text style={ styles.text } numberOfLines={ 1 }>
+				<Text style={ styles.text }>
 					{ __( 'Drag to adjust focal point' ) }
 				</Text>
 				<View style={ styles.arrow } />
