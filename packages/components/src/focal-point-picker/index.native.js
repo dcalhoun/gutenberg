@@ -35,6 +35,7 @@ export default function FocalPointPicker( props ) {
 	const [ sliderKey, setSliderKey ] = useState( 0 );
 	const [ displayPlaceholder, setDisplayPlaceholder ] = useState( true );
 	const [ videoNaturalSize, setVideoNaturalSize ] = useState( null );
+	const [ tooltipVisible, setTooltipVisible ] = useState( true );
 
 	const pan = useRef( new Animated.ValueXY() ).current;
 
@@ -118,7 +119,10 @@ export default function FocalPointPicker( props ) {
 
 	return (
 		<View style={ styles.container }>
-			<Tooltip>
+			<Tooltip
+				visible={ tooltipVisible }
+				onTooltipHidden={ () => setTooltipVisible( false ) }
+			>
 				<View style={ styles.media }>
 					<View
 						{ ...panResponder.panHandlers }

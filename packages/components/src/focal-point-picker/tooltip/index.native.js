@@ -22,18 +22,14 @@ import styles from './style.scss';
 
 const TooltipContext = React.createContext();
 
-function Tooltip( { children } ) {
-	const [ visible, setVisible ] = useState( true );
-
-	const onHide = () => {
-		setVisible( false );
-	};
-
+function Tooltip( { children, onTooltipHidden, visible } ) {
 	return (
 		<TooltipContext.Provider value={ visible }>
 			{ children }
 			{ visible && (
-				<TouchableWithoutFeedback onPress={ onHide }>
+				<TouchableWithoutFeedback
+					onPress={ () => onTooltipHidden( false ) }
+				>
 					<View style={ styles.overlay } />
 				</TouchableWithoutFeedback>
 			) }
@@ -41,7 +37,7 @@ function Tooltip( { children } ) {
 	);
 }
 
-function Label( { onTooltipHidden, text, xOffset, yOffset } ) {
+function Label( { text, xOffset, yOffset } ) {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
 	const [ dimensions, setDimensions ] = useState( null );
 	const visible = useContext( TooltipContext );
@@ -63,11 +59,7 @@ function Label( { onTooltipHidden, text, xOffset, yOffset } ) {
 			useNativeDriver: true,
 			delay: visible ? 500 : 0,
 			easing: Easing.out( Easing.quad ),
-		} ).start( () => {
-			if ( ! visible && onTooltipHidden ) {
-				onTooltipHidden();
-			}
-		} );
+		} ).start();
 	};
 
 	// Transforms rely upon onLayout to enable custom offsets additions
