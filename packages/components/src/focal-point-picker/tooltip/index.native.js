@@ -46,7 +46,7 @@ function Label( { onTooltipHidden, text, xOffset, yOffset } ) {
 	const [ dimensions, setDimensions ] = useState( null );
 	const visible = useContext( TooltipContext );
 
-	if ( ! visible ) {
+	if ( typeof visible === 'undefined' ) {
 		throw new Error(
 			'Tooltip.Label cannot be rendered outside of the Tooltip component'
 		);
