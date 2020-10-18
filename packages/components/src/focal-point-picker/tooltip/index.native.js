@@ -22,9 +22,19 @@ import styles from './style.scss';
 
 export const TooltipContext = React.createContext();
 
-function Tooltip( { children, onTooltipHidden, visible } ) {
+function Tooltip( { children, value } ) {
 	return (
-		<TooltipContext.Provider value={ visible }>
+		<TooltipContext.Provider value={ value }>
+			{ children }
+		</TooltipContext.Provider>
+	);
+}
+
+function Overlay( { children } ) {
+	const { onTooltipHidden, visible } = useContext( TooltipContext );
+
+	return (
+		<>
 			{ children }
 			{ visible && (
 				<TouchableWithoutFeedback
@@ -33,14 +43,14 @@ function Tooltip( { children, onTooltipHidden, visible } ) {
 					<View style={ styles.overlay } />
 				</TouchableWithoutFeedback>
 			) }
-		</TooltipContext.Provider>
+		</>
 	);
 }
 
 function Label( { align, text, xOffset, yOffset } ) {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
 	const [ dimensions, setDimensions ] = useState( null );
-	const visible = useContext( TooltipContext );
+	const { onTooltipHidden, visible } = useContext( TooltipContext );
 
 	if ( typeof visible === 'undefined' ) {
 		throw new Error(
@@ -109,16 +119,20 @@ function Label( { align, text, xOffset, yOffset } ) {
 				],
 			} }
 		>
-			<View
-				onLayout={ ( { nativeEvent } ) => {
-					const { height, width } = nativeEvent.layout;
-					setDimensions( { height, width } );
-				} }
-				style={ tooltipStyles }
+			<TouchableWithoutFeedback
+				onPress={ () => onTooltipHidden( false ) }
 			>
-				<Text style={ styles.text }>{ text }</Text>
-				<View style={ arrowStyles } />
-			</View>
+				<View
+					onLayout={ ( { nativeEvent } ) => {
+						const { height, width } = nativeEvent.layout;
+						setDimensions( { height, width } );
+					} }
+					style={ tooltipStyles }
+				>
+					<Text style={ styles.text }>{ text }</Text>
+					<View style={ arrowStyles } />
+				</View>
+			</TouchableWithoutFeedback>
 		</Animated.View>
 	);
 }
@@ -129,6 +143,7 @@ Label.defaultProps = {
 	yOffset: 0,
 };
 
+Tooltip.Overlay = Overlay;
 Tooltip.Label = Label;
 
 export default Tooltip;

@@ -3,11 +3,12 @@
  */
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import Tooltip from './tooltip';
+import Tooltip from '../../../../components/src/focal-point-picker/tooltip';
 
 /**
  * External dependencies
@@ -18,7 +19,7 @@ import {
 	requestStarterPageTemplatesTooltipShown,
 	setStarterPageTemplatesTooltipShown,
 } from '@wordpress/react-native-bridge';
-import { Animated, Dimensions, Keyboard } from 'react-native';
+import { Animated, Dimensions, Keyboard, View } from 'react-native';
 
 /**
  * Internal dependencies
@@ -134,9 +135,26 @@ const __experimentalPageTemplatePicker = ( {
 
 	return (
 		<Animated.View style={ [ { opacity: contentOpacity } ] }>
-			{ tooltipVisible && (
-				<Tooltip onTooltipHidden={ onTooltipHidden } />
-			) }
+			<Tooltip
+				value={ {
+					visible: tooltipVisible,
+					onTooltipHidden,
+				} }
+			>
+				<Tooltip.Overlay>
+					<View
+						style={ {
+							height: Dimensions.get( 'window' ).height,
+							width: '100%',
+						} }
+					/>
+				</Tooltip.Overlay>
+				<Tooltip.Label
+					align="left"
+					xOffset={ 12 }
+					text={ __( 'Try a starter layout' ) }
+				/>
+			</Tooltip>
 			<Container>
 				{ templates.map( ( template ) => (
 					<Button
