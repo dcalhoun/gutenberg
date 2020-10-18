@@ -130,97 +130,114 @@ export default function FocalPointPicker( props ) {
 		},
 	];
 
+	function onTooltipHidden() {
+		setTooltipVisible( false );
+	}
+
 	return (
 		<View style={ styles.container }>
 			<Tooltip
-				visible={ tooltipVisible }
-				onTooltipHidden={ () => setTooltipVisible( false ) }
+				value={ {
+					visible: tooltipVisible,
+					onTooltipHidden,
+				} }
 			>
-				<View style={ styles.media }>
-					<View
-						{ ...panResponder.panHandlers }
-						onLayout={ ( event ) => {
-							const { height, width } = event.nativeEvent.layout;
+				<Tooltip.Overlay>
+					<View style={ styles.media }>
+						<View
+							{ ...panResponder.panHandlers }
+							onLayout={ ( event ) => {
+								const {
+									height,
+									width,
+								} = event.nativeEvent.layout;
 
-							if (
-								width !== 0 &&
-								height !== 0 &&
-								( containerSize?.width !== width ||
-									containerSize?.height !== height )
-							) {
-								setContainerSize( { width, height } );
-							}
-						} }
-						style={ styles.mediaContainer }
-					>
-						{ MEDIA_TYPE_IMAGE === mediaType && (
-							<Image
-								height="100%"
-								url={ url }
-								style={ [ mediaPlaceholderStyles ] }
-								onImageDataLoad={ () => {
-									setDisplayPlaceholder( false );
-								} }
-							/>
-						) }
-						{ MEDIA_TYPE_VIDEO === mediaType && (
-							<Video
-								muted
-								paused
-								disableFocus
-								onLoad={ ( event ) => {
-									const { height, width } = event.naturalSize;
-									setVideoNaturalSize( { height, width } );
-									setDisplayPlaceholder( false );
-								} }
-								resizeMode={ 'contain' }
-								source={ { uri: url } }
-								style={ [
-									{
-										aspectRatio:
-											videoNaturalSize &&
-											videoNaturalSize.width /
-												videoNaturalSize.height,
-										height: '100%',
-									},
-									mediaPlaceholderStyles,
-								] }
-							/>
-						) }
-						<Animated.View
-							pointerEvents="none"
-							style={ focalPointGroupStyles }
+								if (
+									width !== 0 &&
+									height !== 0 &&
+									( containerSize?.width !== width ||
+										containerSize?.height !== height )
+								) {
+									setContainerSize( { width, height } );
+								}
+							} }
+							style={ styles.mediaContainer }
 						>
-							<Tooltip.Label
-								text={ __( 'Drag to adjust focal point' ) }
-								yOffset={ -25 } // Account for styles.focalPoint offset
-							/>
-							<FocalPoint
-								height={ styles.focalPoint.height }
-								style={ styles.focalPoint }
-								width={ styles.focalPoint.width }
-							/>
-						</Animated.View>
+							{ MEDIA_TYPE_IMAGE === mediaType && (
+								<Image
+									height="100%"
+									url={ url }
+									style={ [ mediaPlaceholderStyles ] }
+									onImageDataLoad={ () => {
+										setDisplayPlaceholder( false );
+									} }
+								/>
+							) }
+							{ MEDIA_TYPE_VIDEO === mediaType && (
+								<Video
+									muted
+									paused
+									disableFocus
+									onLoad={ ( event ) => {
+										const {
+											height,
+											width,
+										} = event.naturalSize;
+										setVideoNaturalSize( {
+											height,
+											width,
+										} );
+										setDisplayPlaceholder( false );
+									} }
+									resizeMode={ 'contain' }
+									source={ { uri: url } }
+									style={ [
+										{
+											aspectRatio:
+												videoNaturalSize &&
+												videoNaturalSize.width /
+													videoNaturalSize.height,
+											height: '100%',
+										},
+										mediaPlaceholderStyles,
+									] }
+								/>
+							) }
+							<Animated.View
+								pointerEvents="none"
+								style={ focalPointGroupStyles }
+							>
+								<Tooltip.Label
+									text={ __( 'Drag to adjust focal point' ) }
+									yOffset={ -25 } // Account for styles.focalPoint offset
+								/>
+								<FocalPoint
+									height={ styles.focalPoint.height }
+									style={ styles.focalPoint }
+									width={ styles.focalPoint.width }
+								/>
+							</Animated.View>
+						</View>
 					</View>
-				</View>
-				<RangeControl
-					inputSuffix="%"
-					key={ `xAxis-${ sliderKey }` }
-					label={ __( 'X-Axis Position' ) }
-					max={ MAX_POSITION_VALUE }
-					min={ MIN_POSITION_VALUE }
-					onChange={ ( x ) => setPosition( { x: x / 100 } ) }
-					value={ Math.round( focalPoint.x * 100 ) }
-				/>
-				<RangeControl
-					inputSuffix="%"
-					key={ `yAxis-${ sliderKey }` }
-					label={ __( 'Y-Axis Position' ) }
-					max={ MAX_POSITION_VALUE }
-					min={ MIN_POSITION_VALUE }
-					onChange={ ( y ) => setPosition( { y: y / 100 } ) }
-					value={ Math.round( focalPoint.y * 100 ) }
-				/>
+					<RangeControl
+						inputSuffix="%"
+						key={ `xAxis-${ sliderKey }` }
+						label={ __( 'X-Axis Position' ) }
+						max={ MAX_POSITION_VALUE }
+						min={ MIN_POSITION_VALUE }
+						onChange={ ( x ) => setPosition( { x: x / 100 } ) }
+						value={ Math.round( focalPoint.x * 100 ) }
+					/>
+					<RangeControl
+						inputSuffix="%"
+						key={ `yAxis-${ sliderKey }` }
+						label={ __( 'Y-Axis Position' ) }
+						max={ MAX_POSITION_VALUE }
+						min={ MIN_POSITION_VALUE }
+						onChange={ ( y ) => setPosition( { y: y / 100 } ) }
+						value={ Math.round( focalPoint.y * 100 ) }
+					/>
+				</Tooltip.Overlay>
 			</Tooltip>
 		</View>
 	);
