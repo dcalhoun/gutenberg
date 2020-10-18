@@ -22,6 +22,7 @@ import org.wordpress.mobile.ReactNativeGutenbergBridge.GutenbergBridgeJS2Parent.
 import org.wordpress.mobile.ReactNativeGutenbergBridge.GutenbergBridgeJS2Parent.MediaType;
 import org.wordpress.mobile.ReactNativeGutenbergBridge.GutenbergBridgeJS2Parent.OtherMediaOptionsReceivedCallback;
 import org.wordpress.mobile.ReactNativeGutenbergBridge.GutenbergBridgeJS2Parent.StarterPageTemplatesTooltipShownCallback;
+import org.wordpress.mobile.ReactNativeGutenbergBridge.GutenbergBridgeJS2Parent.FocalPointPickerTooltipShownCallback;
 import org.wordpress.mobile.WPAndroidGlue.DeferredEventEmitter;
 import org.wordpress.mobile.WPAndroidGlue.MediaOption;
 
@@ -306,6 +307,25 @@ public class RNReactNativeGutenbergBridgeModule extends ReactContextBaseJavaModu
     private StarterPageTemplatesTooltipShownCallback requestStarterPageTemplatesTooltipShownCallback(final Callback jsCallback) {
         return new StarterPageTemplatesTooltipShownCallback() {
             @Override public void onRequestStarterPageTemplatesTooltipShown(boolean tooltipShown) {
+                jsCallback.invoke(tooltipShown);
+            }
+        };
+    }
+
+    @ReactMethod
+    public void setFocalPointPickerTooltipShown(boolean tooltipShown) {
+        mGutenbergBridgeJS2Parent.setFocalPointPickerTooltipShown(tooltipShown);
+    }
+
+    @ReactMethod
+    public void requestFocalPointPickerTooltipShown(final Callback jsCallback) {
+        FocalPointPickerTooltipShownCallback focalPointPickerTooltipShownCallback = requestFocalPointPickerTooltipShownCallback(jsCallback);
+        mGutenbergBridgeJS2Parent.requestFocalPointPickerTooltipShown(focalPointPickerTooltipShownCallback);
+    }
+
+    private FocalPointPickerTooltipShownCallback requestFocalPointPickerTooltipShownCallback(final Callback jsCallback) {
+        return new FocalPointPickerTooltipShownCallback() {
+            @Override public void onRequestFocalPointPickerTooltipShown(boolean tooltipShown) {
                 jsCallback.invoke(tooltipShown);
             }
         };

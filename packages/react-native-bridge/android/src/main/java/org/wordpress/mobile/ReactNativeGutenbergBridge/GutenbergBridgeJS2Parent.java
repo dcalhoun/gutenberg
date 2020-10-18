@@ -42,6 +42,10 @@ public interface GutenbergBridgeJS2Parent extends RequestExecutor {
         void onRequestStarterPageTemplatesTooltipShown(boolean tooltipShown);
     }
 
+    interface FocalPointPickerTooltipShownCallback {
+        void onRequestFocalPointPickerTooltipShown(boolean tooltipShown);
+    }
+
     // Ref: https://github.com/facebook/react-native/blob/master/Libraries/polyfills/console.js#L376
     enum LogLevel {
         TRACE(0),
@@ -155,4 +159,8 @@ public interface GutenbergBridgeJS2Parent extends RequestExecutor {
     void setStarterPageTemplatesTooltipShown(boolean tooltipShown);
 
     void requestStarterPageTemplatesTooltipShown(StarterPageTemplatesTooltipShownCallback starterPageTemplatesTooltipShownCallback);
+
+    void setFocalPointPickerTooltipShown(boolean tooltipShown);
+
+    void requestFocalPointPickerTooltipShown(FocalPointPickerTooltipShownCallback focalPointPickerTooltipShownCallback);
 }

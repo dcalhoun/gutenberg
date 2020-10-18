@@ -222,6 +222,14 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
     func gutenbergDidRequestSetStarterPageTemplatesTooltipShown(_ tooltipShown: Bool) {
         print("Gutenberg requested setting tooltip flag")
     }
+
+    func gutenbergDidRequestFocalPointPickerTooltipShown() -> Bool {
+        return false;
+    }
+
+    func gutenbergDidRequestSetFocalPointPickerTooltipShown(_ tooltipShown: Bool) {
+        print("Gutenberg requested setting tooltip flag")
+    }
 }
 
 extension GutenbergViewController: GutenbergWebDelegate {

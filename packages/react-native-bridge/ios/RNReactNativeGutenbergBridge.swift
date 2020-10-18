@@ -289,6 +289,16 @@ public class RNReactNativeGutenbergBridge: RCTEventEmitter {
     }
 
     @objc
+    func requestFocalPointPickerTooltipShown(_ callback: @escaping RCTResponseSenderBlock) {
+        callback([self.delegate?.gutenbergDidRequestFocalPointPickerTooltipShown() ?? false])
+    }
+    
+    @objc
+    func setFocalPointPickerTooltipShown(_ tooltipShown: Bool) {
+        self.delegate?.gutenbergDidRequestSetFocalPointPickerTooltipShown(tooltipShown)
+    }
+
+    @objc
     func actionButtonPressed(_ buttonType: String) {
         guard let button = Gutenberg.ActionButtonType(rawValue: buttonType) else {
             return
