@@ -92,6 +92,7 @@ public class WPAndroidGlueCode {
     private OnGutenbergDidSendButtonPressedActionListener mOnGutenbergDidSendButtonPressedActionListener;
     private ReplaceUnsupportedBlockCallback mReplaceUnsupportedBlockCallback;
     private OnStarterPageTemplatesTooltipShownEventListener mOnStarterPageTemplatesTooltipShownListener;
+    private OnFocalPointPickerTooltipShownEventListener mOnFocalPointPickerTooltipShownListener;
     private boolean mIsEditorMounted;
 
     private String mContentHtml = "";
@@ -185,6 +186,11 @@ public class WPAndroidGlueCode {
     public interface OnStarterPageTemplatesTooltipShownEventListener {
         void onSetStarterPageTemplatesTooltipShown(boolean tooltipShown);
         boolean onRequestStarterPageTemplatesTooltipShown();
+    }
+
+    public interface OnFocalPointPickerTooltipShownEventListener {
+        void onSetFocalPointPickerTooltipShown(boolean tooltipShown);
+        boolean onRequestFocalPointPickerTooltipShown();
     }
 
     public interface OnContentInfoReceivedListener {
@@ -398,6 +404,17 @@ public class WPAndroidGlueCode {
                 boolean tooltipShown = mOnStarterPageTemplatesTooltipShownListener.onRequestStarterPageTemplatesTooltipShown();
                 starterPageTemplatesTooltipShownCallback.onRequestStarterPageTemplatesTooltipShown(tooltipShown);
             }
+
+            @Override
+            public void setFocalPointPickerTooltipShown(boolean showTooltip) {
+                mOnFocalPointPickerTooltipShownListener.onSetFocalPointPickerTooltipShown(showTooltip);
+            }
+
+            @Override
+            public void requestFocalPointPickerTooltipShown(FocalPointPickerTooltipShownCallback focalPointPickerTooltipShownCallback) {
+                boolean tooltipShown = mOnFocalPointPickerTooltipShownListener.onRequestFocalPointPickerTooltipShown();
+                focalPointPickerTooltipShownCallback.onRequestFocalPointPickerTooltipShown(tooltipShown);
+            }
         }, mIsDarkMode);
 
         return Arrays.asList(
@@ -473,6 +490,7 @@ public class WPAndroidGlueCode {
                                   OnGutenbergDidSendButtonPressedActionListener onGutenbergDidSendButtonPressedActionListener,
                                   AddMentionUtil addMentionUtil,
                                   OnStarterPageTemplatesTooltipShownEventListener onStarterPageTemplatesTooltipListener,
+                                  OnFocalPointPickerTooltipShownEventListener onFocalPointPickerTooltipListener,
                                   boolean isDarkMode) {
         MutableContextWrapper contextWrapper = (MutableContextWrapper) mReactRootView.getContext();
         contextWrapper.setBaseContext(viewGroup.getContext());
@@ -489,6 +507,7 @@ public class WPAndroidGlueCode {
         mOnGutenbergDidSendButtonPressedActionListener = onGutenbergDidSendButtonPressedActionListener;
         mAddMentionUtil = addMentionUtil;
         mOnStarterPageTemplatesTooltipShownListener = onStarterPageTemplatesTooltipListener;
+        mOnFocalPointPickerTooltipShownListener = onFocalPointPickerTooltipListener;
 
         sAddCookiesInterceptor.setOnAuthHeaderRequestedListener(onAuthHeaderRequestedListener);
 

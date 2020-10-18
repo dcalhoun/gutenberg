@@ -229,6 +229,13 @@ public protocol GutenbergBridgeDelegate: class {
     /// - Parameter tooltipShown: Tooltip's visibility value    
     func gutenbergDidRequestSetStarterPageTemplatesTooltipShown(_ tooltipShown: Bool)
 
+    /// Tells the delegate that the editor requested to show the tooltip
+    func gutenbergDidRequestFocalPointPickerTooltipShown() -> Bool
+    
+    /// Tells the delegate that the editor requested to set the tooltip's visibility
+    /// - Parameter tooltipShown: Tooltip's visibility value    
+    func gutenbergDidRequestSetFocalPointPickerTooltipShown(_ tooltipShown: Bool)
+
     func gutenbergDidSendButtonPressedAction(_ buttonType: Gutenberg.ActionButtonType)
 }
 
