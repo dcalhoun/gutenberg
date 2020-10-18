@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, useContext } from '@wordpress/element';
  */
 import styles from './style.scss';
 
-const TooltipContext = React.createContext();
+export const TooltipContext = React.createContext();
 
 function Tooltip( { children, onTooltipHidden, visible } ) {
 	return (
@@ -37,7 +37,7 @@ function Tooltip( { children, onTooltipHidden, visible } ) {
 	);
 }
 
-function Label( { text, xOffset, yOffset } ) {
+function Label( { align, text, xOffset, yOffset } ) {
 	const animationValue = useRef( new Animated.Value( 0 ) ).current;
 	const [ dimensions, setDimensions ] = useState( null );
 	const visible = useContext( TooltipContext );
@@ -66,10 +66,34 @@ function Label( { text, xOffset, yOffset } ) {
 	let tooltipTransforms;
 	if ( dimensions ) {
 		tooltipTransforms = [
-			{ translateX: -dimensions.width / 2 + xOffset },
+			{
+				translateX:
+					( align === 'center' ? -dimensions.width / 2 : 0 ) +
+					xOffset,
+			},
 			{ translateY: -dimensions.height + yOffset },
 		];
 	}
+
+	const tooltipStyles = [
+		styles.tooltip,
+		{
+			shadowColor: styles.tooltipShadow.color,
+			shadowOffset: {
+				width: 0,
+				height: 2,
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 2,
+			elevation: 2,
+			transform: tooltipTransforms,
+		},
+		align === 'left' && styles.tooltipLeftAlign,
+	];
+	const arrowStyles = [
+		styles.arrow,
+		align === 'left' && styles.arrowLeftAlign,
+	];
 
 	return (
 		<Animated.View
@@ -90,29 +114,17 @@ function Label( { text, xOffset, yOffset } ) {
 					const { height, width } = nativeEvent.layout;
 					setDimensions( { height, width } );
 				} }
-				style={ [
-					styles.tooltip,
-					{
-						shadowColor: styles.tooltipShadow.color,
-						shadowOffset: {
-							width: 0,
-							height: 2,
-						},
-						shadowOpacity: 0.25,
-						shadowRadius: 2,
-						elevation: 2,
-						transform: tooltipTransforms,
-					},
-				] }
+				style={ tooltipStyles }
 			>
 				<Text style={ styles.text }>{ text }</Text>
-				<View style={ styles.arrow } />
+				<View style={ arrowStyles } />
 			</View>
 		</Animated.View>
 	);
 }
 
 Label.defaultProps = {
+	align: 'center',
 	xOffset: 0,
 	yOffset: 0,
 };
