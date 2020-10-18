@@ -141,14 +141,13 @@ const __experimentalPageTemplatePicker = ( {
 					onTooltipHidden,
 				} }
 			>
-				<Tooltip.Overlay>
-					<View
-						style={ {
-							height: Dimensions.get( 'window' ).height,
-							width: '100%',
-						} }
-					/>
-				</Tooltip.Overlay>
+				<Tooltip.Overlay
+					style={ {
+						position: 'relative',
+						height: Dimensions.get( 'window' ).height,
+						width: '100%',
+					} }
+				/>
 				<Tooltip.Label
 					align="left"
 					xOffset={ 12 }

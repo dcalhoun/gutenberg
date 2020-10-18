@@ -30,7 +30,7 @@ function Tooltip( { children, value } ) {
 	);
 }
 
-function Overlay( { children } ) {
+function Overlay( { children, style } ) {
 	const { onTooltipHidden, visible } = useContext( TooltipContext );
 
 	return (
@@ -40,7 +40,7 @@ function Overlay( { children } ) {
 				<TouchableWithoutFeedback
 					onPress={ () => onTooltipHidden( false ) }
 				>
-					<View style={ styles.overlay } />
+					<View style={ [ styles.overlay, style ] } />
 				</TouchableWithoutFeedback>
 			) }
 		</>
