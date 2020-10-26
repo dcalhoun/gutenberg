@@ -5,19 +5,9 @@ import { useState, useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
- * Internal dependencies
- */
-import Tooltip from './tooltip';
-
-/**
  * External dependencies
  */
-import {
-	logUserEvent,
-	userEvents,
-	requestStarterPageTemplatesTooltipShown,
-	setStarterPageTemplatesTooltipShown,
-} from '@wordpress/react-native-bridge';
+import { logUserEvent, userEvents } from '@wordpress/react-native-bridge';
 import { Animated, Dimensions, Keyboard } from 'react-native';
 
 /**
@@ -46,7 +36,6 @@ const __experimentalPageTemplatePicker = ( {
 
 	const [ templatePreview, setTemplatePreview ] = useState();
 	const [ pickerVisible, setPickerVisible ] = useState( visible );
-	const [ tooltipVisible, setTooltipVisible ] = useState( false );
 	const contentOpacity = useRef( new Animated.Value( 0 ) ).current;
 
 	useEffect( () => {
@@ -55,7 +44,6 @@ const __experimentalPageTemplatePicker = ( {
 		}
 
 		startPickerAnimation( visible );
-		shouldShowTooltip();
 
 		Keyboard.addListener( 'keyboardDidShow', onKeyboardDidShow );
 		Keyboard.addListener( 'keyboardDidHide', onKeyboardDidHide );
@@ -65,12 +53,6 @@ const __experimentalPageTemplatePicker = ( {
 			Keyboard.removeListener( 'keyboardDidHide', onKeyboardDidHide );
 		};
 	}, [ visible ] );
-
-	useEffect( () => {
-		if ( tooltipVisible && templatePreview ) {
-			setTooltipVisible( false );
-		}
-	}, [ templatePreview ] );
 
 	const onKeyboardDidShow = () => {
 		if ( visible ) {
@@ -92,15 +74,6 @@ const __experimentalPageTemplatePicker = ( {
 		return PICKER_HEIGHT_OFFSET < windowHeight / 3;
 	};
 
-	const shouldShowTooltip = () => {
-		requestStarterPageTemplatesTooltipShown( ( tooltipShown ) => {
-			if ( ! tooltipShown ) {
-				setTooltipVisible( true );
-				setStarterPageTemplatesTooltipShown( true );
-			}
-		} );
-	};
-
 	const onApply = () => {
 		editPost( {
 			title: title || templatePreview.name,
@@ -110,10 +83,6 @@ const __experimentalPageTemplatePicker = ( {
 			template: templatePreview.key,
 		} );
 		setTemplatePreview( undefined );
-	};
-
-	const onTooltipHidden = () => {
-		setTooltipVisible( false );
 	};
 
 	const startPickerAnimation = ( isVisible ) => {
@@ -134,9 +103,6 @@ const __experimentalPageTemplatePicker = ( {
 
 	return (
 		<Animated.View style={ [ { opacity: contentOpacity } ] }>
-			{ tooltipVisible && (
-				<Tooltip onTooltipHidden={ onTooltipHidden } />
-			) }
 			<Container>
 				{ templates.map( ( template ) => (
 					<Button
