@@ -187,9 +187,10 @@ class Layout extends Component {
 								<>
 									<Tooltip.Label
 										align="left"
+										text={ __( 'Try a starter layout' ) }
 										xOffset={ 12 }
 										yOffset={ 4 }
-										text={ __( 'Try a starter layout' ) }
+										onPress={ this.onTooltipHidden }
 									/>
 									<__experimentalPageTemplatePicker
 										visible={ isTemplatePickerVisible }
