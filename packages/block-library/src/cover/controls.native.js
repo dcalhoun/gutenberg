@@ -162,7 +162,7 @@ function Controls( {
 					onUnitChange={ onChangeUnit }
 					units={ CSS_UNITS }
 					style={ styles.rangeCellContainer }
-					key={ `${ minHeightUnit }-${ minHeight }` }
+					key={ minHeightUnit }
 				/>
 			</PanelBody>
 
