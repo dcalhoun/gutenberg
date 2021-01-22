@@ -493,15 +493,22 @@ const Cover = ( {
 				</View>
 			</View>
 
-			<MediaUpload
-				allowedTypes={ ALLOWED_MEDIA_TYPES }
-				isReplacingMedia={ ! hasOnlyColorBackground }
-				onSelect={ onSelectMedia }
-				render={ ( { open, getMediaOptions } ) => {
-					openMediaOptionsRef.current = open;
-					return renderContent( getMediaOptions );
-				} }
-			/>
+			<InspectorControls>
+				<BottomSheetConsumer>
+					{ ( { onHandleDismissing } ) => (
+						<MediaUpload
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							isReplacingMedia={ ! hasOnlyColorBackground }
+							onHandleDismissing={ onHandleDismissing }
+							onSelect={ onSelectMedia }
+							render={ ( { open, getMediaOptions } ) => {
+								openMediaOptionsRef.current = open;
+								return renderContent( getMediaOptions );
+							} }
+						/>
+					) }
+				</BottomSheetConsumer>
+			</InspectorControls>
 
 			{ shouldShowFailure && (
 				<View

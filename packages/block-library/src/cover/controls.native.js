@@ -251,7 +251,9 @@ function Controls( {
 						label={ __( 'Add image or video' ) }
 						labelStyle={ addMediaButtonStyle }
 						leftAlign
-						onPress={ openMediaOptionsRef.current }
+						onPress={ () => {
+							openMediaOptionsRef.current();
+						} }
 					/>
 				) }
 			</PanelBody>

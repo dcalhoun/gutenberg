@@ -63,6 +63,8 @@ class BottomSheet extends Component {
 		this.onHandleHardwareButtonPress = this.onHandleHardwareButtonPress.bind(
 			this
 		);
+		this.onDismiss = this.onDismiss.bind( this );
+		this.onHandleDismissing = this.onHandleDismissing.bind( this );
 		this.keyboardWillShow = this.keyboardWillShow.bind( this );
 		this.keyboardDidHide = this.keyboardDidHide.bind( this );
 
@@ -243,6 +245,23 @@ class BottomSheet extends Component {
 		this.onShouldSetBottomSheetMaxHeight( true );
 	}
 
+	onDismiss() {
+		const { onDismiss } = this.props;
+		const { handleDismissing } = this.state;
+
+		if ( handleDismissing ) {
+			handleDismissing();
+		}
+
+		if ( onDismiss ) {
+			onDismiss();
+		}
+	}
+
+	onHandleDismissing( action ) {
+		this.setState( { handleDismissing: action } );
+	}
+
 	setIsFullScreen( isFullScreen ) {
 		if ( isFullScreen !== this.state.isFullScreen ) {
 			if ( isFullScreen ) {
@@ -380,9 +399,9 @@ class BottomSheet extends Component {
 				onBackdropPress={ this.onCloseBottomSheet }
 				onBackButtonPress={ this.onHardwareButtonPress }
 				onSwipe={ this.onCloseBottomSheet }
-				onDismiss={ Platform.OS === 'ios' ? onDismiss : undefined }
+				onDismiss={ Platform.OS === 'ios' ? this.onDismiss : undefined }
 				onModalHide={
-					Platform.OS === 'android' ? onDismiss : undefined
+					Platform.OS === 'android' ? this.onDismiss : undefined
 				}
 				swipeDirection="down"
 				onMoveShouldSetResponder={
@@ -433,6 +452,7 @@ class BottomSheet extends Component {
 									.onHandleClosingBottomSheet,
 								onHandleHardwareButtonPress: this
 									.onHandleHardwareButtonPress,
+								onHandleDismissing: this.onHandleDismissing,
 								listProps,
 								setIsFullScreen: this.setIsFullScreen,
 								safeAreaBottomInset,

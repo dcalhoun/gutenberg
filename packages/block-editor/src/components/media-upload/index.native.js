@@ -20,6 +20,8 @@ import {
 	wordpress,
 	mobile,
 } from '@wordpress/icons';
+import { compose } from '@wordpress/compose';
+import { withDispatch, withSelect } from '@wordpress/data';
 
 export const MEDIA_TYPE_IMAGE = 'image';
 export const MEDIA_TYPE_VIDEO = 'video';
@@ -34,6 +36,7 @@ export class MediaUpload extends React.Component {
 		super( props );
 		this.onPickerPresent = this.onPickerPresent.bind( this );
 		this.onPickerSelect = this.onPickerSelect.bind( this );
+		this.onBeforePickerSelect = this.onBeforePickerSelect.bind( this );
 		this.getAllSources = this.getAllSources.bind( this );
 
 		this.state = {
@@ -150,6 +153,22 @@ export class MediaUpload extends React.Component {
 		} );
 	}
 
+	onBeforePickerSelect( value ) {
+		const {
+			closeGeneralSidebar,
+			editorSidebarOpened,
+			onHandleDismissing,
+		} = this.props;
+
+		if ( editorSidebarOpened && closeGeneralSidebar ) {
+			onHandleDismissing( () => this.onPickerSelect( value ) );
+			closeGeneralSidebar();
+			return;
+		}
+
+		this.onPickerSelect( value );
+	}
+
 	render() {
 		const { allowedTypes = [], isReplacingMedia, multiple } = this.props;
 		const isOneType = allowedTypes.length === 1;
@@ -193,7 +212,7 @@ export class MediaUpload extends React.Component {
 				hideCancelButton
 				ref={ ( instance ) => ( this.picker = instance ) }
 				options={ this.getMediaOptionsItems() }
-				onChange={ this.onPickerSelect }
+				onChange={ this.onBeforePickerSelect }
 			/>
 		);
 
@@ -204,4 +223,11 @@ export class MediaUpload extends React.Component {
 	}
 }
 
-export default MediaUpload;
+export default compose( [
+	withSelect( ( select ) => ( {
+		editorSidebarOpened: select( 'core/edit-post' ).isEditorSidebarOpened(),
+	} ) ),
+	withDispatch( ( dispatch ) => ( {
+		closeGeneralSidebar: dispatch( 'core/edit-post' ).closeGeneralSidebar,
+	} ) ),
+] )( MediaUpload );
