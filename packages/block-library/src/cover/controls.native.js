@@ -22,6 +22,8 @@ import { useState } from '@wordpress/element';
 import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
+import { store as editPostStore } from '@wordpress/edit-post';
 
 /**
  * Internal dependencies
@@ -63,6 +65,8 @@ function Controls( {
 			setAttributes( { minHeight: value } );
 		}
 	};
+
+	const { closeGeneralSidebar } = useDispatch( editPostStore );
 
 	const onOpacityChange = ( value ) => {
 		setAttributes( { dimRatio: value } );
@@ -251,7 +255,10 @@ function Controls( {
 						label={ __( 'Add image or video' ) }
 						labelStyle={ addMediaButtonStyle }
 						leftAlign
-						onPress={ openMediaOptionsRef.current }
+						onPress={ () => {
+							closeGeneralSidebar();
+							openMediaOptionsRef.current();
+						} }
 					/>
 				) }
 			</PanelBody>
